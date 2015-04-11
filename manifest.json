@@ -1,0 +1,17 @@
+{
+   "chrome_url_overrides": {
+      "newtab": "main.html"
+   },
+   "description": "",
+   "background": {
+     "persistent": false,
+     "scripts": [
+       "scripts/events.js"
+     ]
+   },
+   "manifest_version": 2,
+   "name": "HackUpstate",
+   "version": "1.0",
+   "icons": {},
+   "content_security_policy": "script-src 'self' https://www.google-analytics.com; img-src *; object-src 'self'"
+}
