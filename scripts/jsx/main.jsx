@@ -1,14 +1,47 @@
 (function() {
 
+  var API_ROOT = 'data';
+
+  function getAlbums(callback) {
+
+    var albums, listState;
+
+    var storedAlbums = localStorage.getItem('albums');
+    var storedListState = localStorage.getItem('listState');
+
+    if (storedListState) {
+      listState = JSON.parse(storedListState);
+      listState.index += 1;
+      localStorage.setItem('listState', JSON.stringify(listState))
+    } else {
+      listState = { index: 0 }
+      localStorage.setItem('listState', JSON.stringify(listState))
+    }
+
+    if (storedAlbums) {
+      albums = JSON.parse(storedAlbums);
+      callback(getThreeAlbums(albums, listState))
+    } else {
+      $.getJSON('data/albums.json', function(albums) {
+        var jsonString = JSON.stringify(albums);
+        localStorage.setItem('albums', jsonString)
+        callback(getThreeAlbums(albums, listState))
+      })
+    }
+  }
+
+  function getThreeAlbums(albums, listState) {
+    return albums.slice(listState.index, listState.index + 3)
+  }
+
   var AlbumArt = React.createClass({
     render: function() {
 
       var album = this.props.album;
-
       return (
-        <a className="album-art" href={album.url}>
-          <img src={album.image_src} />
-        </a>
+        <div className="album-art">
+          <a href={album.url}><img src={album.image_src} /></a>
+        </div>
       );
     }
   })
@@ -30,9 +63,12 @@
 
       var component = this;
 
-      // when the component mounts, we need to update the data
-      chrome.runtime.sendMessage({}, function(response) {
-        component.setState(formatResponse(response));
+      console.log('called componentDidMount');
+
+      getAlbums(function(albums) {
+        component.setState({
+          albums: albums
+        })
       })
 
     },
@@ -51,14 +87,8 @@
         </ul>
       );
     }
-  })
 
-  function formatResponse(res) {
-    // TODO: returns object with albums array prop: { albums: [] }
-    return {
-      albums: res
-    }
-  }
+  })
 
   React.render(<AlbumList />, document.getElementById('main'));
 

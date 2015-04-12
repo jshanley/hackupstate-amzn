@@ -8,29 +8,31 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     makeRequest();
   } else {
     resultList = JSON.parse(rawResultList);
-    resultListReady(resultList);
+    sendResponse(resultList);
   }
 
+/*
   function resultListReady(list) {
     // If there are fewer than 5 results, make a request for more results
     if (list.length < 5) {
       makeRequest();
     } else {
-      sendResponse(list);
+      sendResponse({ albums: list });
     }
   }
-
+*/
   function makeRequest() {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.onreadystatechange = function(evt) {
       if (xhr.readyState == 4) {
-        sendResponse(list);
+        sendResponse({ albums: list });
         var jsonString = JSON.stringify(list);
         localStorage.setItem('resultList', jsonString);
-        resultListReady(list)
+        sendResponse(resultList)
       }
     };
+    console.log('sending xhr');
     xhr.open('GET', API_ROOT + '/albums.json');
     xhr.send();
   }

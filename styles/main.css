@@ -7,7 +7,10 @@ body {
 
 #main {
   text-align: center;
+  width: 100%;
+  max-width: 1500px;
   height: 100%;
+  margin: 0 auto;
 }
 #main:before {
   content: '';
@@ -27,24 +30,27 @@ body {
 }
 
 .album-list-item {
+  box-sizing: border-box;
   float: left;
   width: 33%;
+  padding: 10px;
 }
 
 .album-art {
   position: relative;
-  top: 0;
-  padding: 10px;
-  max-width: 500px;
+  display: block;
+  width: 100%;
   transition-property: all;
   transition-duration: 50ms;
+  border-bottom: 3px solid transparent;
 }
 .album-art:hover {
-  top: 5px;
-  left: 2px;
+  border-color: yellow;
 }
 
 .album-art img {
   max-width: 100%;
   border: 1px solid transparent;
 }
+
+@media (min-width: 600px)
