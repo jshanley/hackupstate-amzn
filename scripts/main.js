@@ -9,15 +9,31 @@
 
     var storedAlbums = localStorage.getItem('albums');
 
+    var makeApiCall = function() {
+
+      console.log('making API call');
+
+      $.getJSON(DATA_URL, function(albums) {
+        var timestamp = +(new Date());
+        var jsonString = JSON.stringify({
+          albums: albums,
+          timestamp: timestamp
+        });
+        localStorage.setItem('albums', jsonString)
+        callback(getThreeAlbums(albums))
+      })
+    }
+
     if (storedAlbums) {
       albums = JSON.parse(storedAlbums);
-      callback(getThreeAlbums(albums, listState))
+      var now = +(new Date());
+      if (albums.timestamp < (now - 3600000)) {
+        makeApiCall();
+      } else {
+        callback(getThreeAlbums(albums.albums))
+      }
     } else {
-      $.getJSON(DATA_URL, function(albums) {
-        var jsonString = JSON.stringify(albums);
-        localStorage.setItem('albums', jsonString)
-        callback(getThreeAlbums(albums, listState))
-      })
+      makeApiCall();
     }
   }
 
@@ -27,7 +43,7 @@
     })
   }
 
-  function getThreeAlbums(albums, listState) {
+  function getThreeAlbums(albums) {
     var indexes = getIndexes(albums);
     return indexes.map(function(i) {
       return albums[i];
