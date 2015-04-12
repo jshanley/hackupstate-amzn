@@ -50,7 +50,7 @@
 
     getInitialState: function() {
       return {
-        // TODO: pull from API
+        // just in case, load some defaults...
         albums: [
           { asin: 1, url: '#', image_src: 'images/zep.jpg' },
           { asin: 2, url: '#', image_src: 'images/al.png' },
@@ -65,6 +65,7 @@
 
       console.log('called componentDidMount');
 
+      // gives back an array of 3 album objects
       getAlbums(function(albums) {
         component.setState({
           albums: albums
