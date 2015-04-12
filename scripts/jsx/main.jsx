@@ -8,16 +8,6 @@
     var albums, listState;
 
     var storedAlbums = localStorage.getItem('albums');
-    var storedListState = localStorage.getItem('listState');
-
-    if (storedListState) {
-      listState = JSON.parse(storedListState);
-      listState.index += 1;
-      localStorage.setItem('listState', JSON.stringify(listState))
-    } else {
-      listState = { index: 0 }
-      localStorage.setItem('listState', JSON.stringify(listState))
-    }
 
     if (storedAlbums) {
       albums = JSON.parse(storedAlbums);
@@ -31,8 +21,17 @@
     }
   }
 
+  function getIndexes(albums) {
+    return ([0,1,2]).map(function(i) {
+      return ~~(Math.random() * albums.length);
+    })
+  }
+
   function getThreeAlbums(albums, listState) {
-    return albums.slice(listState.index, listState.index + 3)
+    var indexes = getIndexes(albums);
+    return indexes.map(function(i) {
+      return albums[i];
+    })
   }
 
   var AlbumArt = React.createClass({
@@ -85,7 +84,7 @@
 
     render: function() {
 
-      console.log('`render` called');
+      console.log('AlbumList `render` called');
 
       return (
         <ul className="album-list">
