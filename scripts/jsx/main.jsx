@@ -37,6 +37,8 @@
   var AlbumArt = React.createClass({
     render: function() {
 
+      console.log('AlbumArt `render` called');
+
       var album = this.props.album;
       return (
         <div className="album-art">
@@ -49,24 +51,30 @@
   var AlbumList = React.createClass({
 
     getInitialState: function() {
+
+      console.log('AlbumList `getInitialState` called');
+
       return {
         // just in case, load some defaults...
         albums: [
-          { asin: 1, url: '#', image_src: 'images/zep.jpg' },
-          { asin: 2, url: '#', image_src: 'images/al.png' },
-          { asin: 3, url: '#', image_src: 'images/joni.png' },
+          { asin: 0, url: '#', image_src: 'images/zep.jpg' },
+          { asin: 1, url: '#', image_src: 'images/al.png' },
+          { asin: 2, url: '#', image_src: 'images/joni.png' },
         ]
       }
     },
 
-    componentDidMount: function() {
+    componentWillMount: function() {
 
       var component = this;
 
-      console.log('called componentDidMount');
+      console.log('AlbumList `componentWillMount` called');
 
       // gives back an array of 3 album objects
       getAlbums(function(albums) {
+
+        console.log('got albums:', albums)
+
         component.setState({
           albums: albums
         })
@@ -75,6 +83,8 @@
     },
 
     render: function() {
+
+      console.log('`render` called')
 
       return (
         <ul className="album-list">
