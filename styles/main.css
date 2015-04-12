@@ -20,6 +20,24 @@ body {
   margin-right: -0.25em;
 }
 
+#default-new-tab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1em;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: #d3e3e8;
+  opacity: 0.3;
+  cursor: pointer;
+}
+#default-new-tab:hover {
+  opacity: 1;
+}
+#default-new-tab:hover .arrow {
+  color: yellow;
+}
+
 .album-list {
   display: inline-block;
   vertical-align: middle;
@@ -46,11 +64,10 @@ body {
 }
 .album-art:hover {
   border-color: yellow;
+  opacity: 0.95;
 }
 
 .album-art img {
   max-width: 100%;
   border: 1px solid transparent;
 }
-
-@media (min-width: 600px)

@@ -104,6 +104,13 @@
 
   React.render(<AlbumList />, document.getElementById('main'));
 
+  jQuery('#default-new-tab').on('click', function() {
+    console.log('default new tab clicked');
+    chrome.tabs.update({
+      url: 'chrome-search://local-ntp/local-ntp.html'
+    });
+  })
+
   window.addEventListener('DOMContentLoaded', maintainSize);
   window.addEventListener('resize', maintainSize);
 
