@@ -1,6 +1,7 @@
 (function() {
 
-  var API_ROOT = 'data';
+  // TODO: update url when ready to pull from api
+  var DATA_URL = 'data/albums.json';
 
   function getAlbums(callback) {
 
@@ -22,7 +23,7 @@
       albums = JSON.parse(storedAlbums);
       callback(getThreeAlbums(albums, listState))
     } else {
-      $.getJSON('data/albums.json', function(albums) {
+      $.getJSON(DATA_URL, function(albums) {
         var jsonString = JSON.stringify(albums);
         localStorage.setItem('albums', jsonString)
         callback(getThreeAlbums(albums, listState))
@@ -84,7 +85,7 @@
 
     render: function() {
 
-      console.log('`render` called')
+      console.log('`render` called');
 
       return (
         <ul className="album-list">
