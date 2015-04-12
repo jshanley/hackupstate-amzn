@@ -3,7 +3,7 @@
   var AlbumArt = React.createClass({displayName: "AlbumArt",
     render: function() {
       return (
-        React.createElement("div", {className: "album-art"}, 
+        React.createElement("div", {className: "album-art"},
           React.createElement("img", {src: this.props.image})
         )
       );
@@ -15,10 +15,10 @@
     getInitialState: function() {
       return {
         // TODO: pull from API
-        images: [
-          'images/zep.jpg',
-          'images/al.png',
-          'images/joni.png'
+        albums: [
+          { imgUrl: 'images/zep.jpg' },
+          { imgUrl: 'images/al.jpg' },
+          { imgUrl: 'images/joni.jpg' },
         ]
       }
     },
@@ -35,11 +35,11 @@
     render: function() {
 
       return (
-        React.createElement("ul", {className: "album-list"}, 
-          this.state.images.map(function(image) {
+        React.createElement("ul", {className: "album-list"},
+          this.state.albums.map(function(album) {
             return (
-              React.createElement("li", {className: "album-list-item"}, 
-                React.createElement(AlbumArt, {image: image})
+              React.createElement("li", {className: "album-list-item"},
+                React.createElement(AlbumArt, {album: album})
               )
             );
           })

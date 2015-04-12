@@ -32,13 +32,16 @@ body {
 }
 
 .album-art {
+  position: relative;
+  top: 0;
   padding: 10px;
   max-width: 500px;
   transition-property: all;
   transition-duration: 50ms;
 }
 .album-art:hover {
-  padding: 4px;
+  top: 5px;
+  left: 2px;
 }
 
 .album-art img {

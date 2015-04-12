@@ -20,8 +20,8 @@
         // TODO: pull from API
         albums: [
           { asin: 1, url: '#', image_src: 'images/zep.jpg' },
-          { asin: 2, url: '#', image_src: 'images/al.png' },
-          { asin: 3, url: '#', image_src: 'images/joni.png' },
+          { asin: 2, url: '#', image_src: 'images/al.jpg' },
+          { asin: 3, url: '#', image_src: 'images/joni.jpg' },
         ]
       }
     },
@@ -31,7 +31,7 @@
       var component = this;
 
       // when the component mounts, we need to update the data
-      chrome.runtime.sendMessage({}, function(response) {
+      chrome.runtime.sendMessage({foo: 'bar'}, function(response) {
         component.setState(formatResponse(response));
       })
 
@@ -54,10 +54,8 @@
   })
 
   function formatResponse(res) {
-    // TODO: returns object with albums array prop: { albums: [] }
-    return {
-      albums: res
-    }
+    // TODO: returns object with images array prop: { images: [] }
+    return res;
   }
 
   React.render(React.createElement(AlbumList, null), document.getElementById('main'));

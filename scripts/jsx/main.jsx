@@ -2,10 +2,13 @@
 
   var AlbumArt = React.createClass({
     render: function() {
+
+      var album = this.props.album;
+
       return (
-        <div className="album-art">
-          <img src={this.props.image} />
-        </div>
+        <a className="album-art" href={album.url}>
+          <img src={album.image_src} />
+        </a>
       );
     }
   })
@@ -15,10 +18,10 @@
     getInitialState: function() {
       return {
         // TODO: pull from API
-        images: [
-          'images/zep.jpg',
-          'images/al.png',
-          'images/joni.png'
+        albums: [
+          { asin: 1, url: '#', image_src: 'images/zep.jpg' },
+          { asin: 2, url: '#', image_src: 'images/al.png' },
+          { asin: 3, url: '#', image_src: 'images/joni.png' },
         ]
       }
     },
@@ -28,7 +31,7 @@
       var component = this;
 
       // when the component mounts, we need to update the data
-      chrome.runtime.sendMessage({foo: 'bar'}, function(response) {
+      chrome.runtime.sendMessage({}, function(response) {
         component.setState(formatResponse(response));
       })
 
@@ -38,10 +41,10 @@
 
       return (
         <ul className="album-list">
-          {this.state.images.map(function(image) {
+          {this.state.albums.map(function(album) {
             return (
-              <li className="album-list-item">
-                <AlbumArt image={image} />
+              <li key={album.asin} className="album-list-item">
+                <AlbumArt album={album} />
               </li>
             );
           })}
@@ -51,8 +54,10 @@
   })
 
   function formatResponse(res) {
-    // TODO: returns object with images array prop: { images: [] }
-    return res;
+    // TODO: returns object with albums array prop: { albums: [] }
+    return {
+      albums: res
+    }
   }
 
   React.render(<AlbumList />, document.getElementById('main'));

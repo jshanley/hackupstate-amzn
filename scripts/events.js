@@ -1,11 +1,14 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
+  var API_ROOT = '/data';
+
   var rawResultList = localStorage.getItem('resultList');
   var resultList;
   if (!rawResultList) {
     makeRequest();
   } else {
     resultList = JSON.parse(rawResultList);
+    resultListReady(resultList);
   }
 
   function resultListReady(list) {
@@ -20,7 +23,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   function makeRequest() {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.open('GET', API_ROOT + '/results.json');
+    xhr.onreadystatechange = function(evt) {
+      if (xhr.readyState == 4) {
+        sendResponse(list);
+        var jsonString = JSON.stringify(list);
+        localStorage.setItem('resultList', jsonString);
+        resultListReady(list)
+      }
+    };
+    xhr.open('GET', API_ROOT + '/albums.json');
     xhr.send();
   }
 
