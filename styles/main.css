@@ -33,6 +33,7 @@ body {
 
 .album-art {
   padding: 10px;
+  max-width: 500px;
   transition-property: all;
   transition-duration: 50ms;
 }

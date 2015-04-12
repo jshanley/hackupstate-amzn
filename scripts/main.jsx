@@ -25,9 +25,11 @@
 
     componentDidMount: function() {
 
+      var component = this;
+
       // when the component mounts, we need to update the data
       chrome.runtime.sendMessage({foo: 'bar'}, function(response) {
-        console.log('response', response);
+        component.setState(formatResponse(response));
       })
 
     },
@@ -47,6 +49,11 @@
       );
     }
   })
+
+  function formatResponse(res) {
+    // TODO: returns object with images array prop: { images: [] }
+    return res;
+  }
 
   React.render(<AlbumList />, document.getElementById('main'));
 
